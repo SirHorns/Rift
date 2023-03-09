@@ -1,0 +1,12 @@
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\bin\Debug\net6.0\Rift.deps.json
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\bin\Debug\net6.0\Rift.dll
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\bin\Debug\net6.0\Rift.pdb
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\Rift.csproj.AssemblyReference.cache
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\Rift.GeneratedMSBuildEditorConfig.editorconfig
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\Rift.AssemblyInfoInputs.cache
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\Rift.AssemblyInfo.cs
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\Rift.csproj.CoreCompileInputs.cache
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\Rift.dll
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\refint\Rift.dll
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\Rift.pdb
+F:\Users\mgt_bsthomas4\Documents\GitHub\SpellbreakProjects\Rift\obj\Debug\net6.0\ref\Rift.dll
