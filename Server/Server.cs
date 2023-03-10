@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Rift.Events;
+using Rift.Player;
 
 namespace Rift;
 
@@ -9,6 +11,7 @@ public class Server
     public string Args { get; }
     public string Port { get; }
     public bool IsRunning { get; private set; }
+    public ServerData ServerData { get; }
 
     public static event EventHandler? Started;
     public static event EventHandler? Stopped;
@@ -16,7 +19,7 @@ public class Server
 
     public LogReader LogReader { get; }
 
-    public Server(Process process, string args, string port, string matchId = "", bool autoStart = false)
+    public Server(Process process, string args, string port, string matchId, string logDirectory, bool readLogFile = false, bool autoStart = false)
     {
         _process = process;
         _process.Exited += ProcessExit;
@@ -26,16 +29,26 @@ public class Server
         Port = port;
 
         IsRunning = false;
-        MatchId = port;
+        MatchId = matchId;
+        
+        ServerData = new ServerData();
+        ServerData.PlayedAdded += OnPlayerAdded;
 
-        LogReader = new LogReader("F:\\Spellbreak_Server\\g3\\Saved\\Logs");
+        LogReader = new LogReader(matchId, logDirectory, readLogFile, this);
+        
 
         if (autoStart)
         {
             Start();
         }
     }
-    
+
+    private void OnPlayerAdded(object? sender,EventArgs e)
+    {
+       Console.WriteLine($"{(e as PlayerArg)?.Player.DisplayName}");
+    }
+
+
     public bool Start()
     {
         Console.WriteLine($"Starting server {Port}");
@@ -43,7 +56,7 @@ public class Server
         try
         {
             _process.Start();
-            Task.Run(() => LogReader.Read(MatchId));
+            Task.Run(() => LogReader.Read());
         }
         catch (Exception e)
         {
@@ -52,7 +65,7 @@ public class Server
             return IsRunning = false;
         }
         
-        Started?.Invoke(this, EventArgs.Empty);
+        Started?.Invoke(this, new ServerArg(this));
         return IsRunning = true;
     }
     
@@ -62,7 +75,7 @@ public class Server
         try
         {
             _process.Kill();
-            LogReader.StopLogging();
+            LogReader.Stop();
         }
         catch (Exception e)
         {
@@ -70,7 +83,7 @@ public class Server
             return false;
         }
         
-        Stopped?.Invoke(this, EventArgs.Empty);
+        Stopped?.Invoke(this, new ServerArg(this));
         return true;
     }
     

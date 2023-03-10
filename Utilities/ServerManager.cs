@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics;
+using Rift.Events;
 using Rift.Utilities;
 
 namespace Rift;
 
-public class RiftManager
+public class ServerManager
 {
     public string ServerExecutable = "g3Server-Win64-Test.exe";
     public int ServerCap { get; set; }
@@ -15,8 +16,7 @@ public class RiftManager
     
     public string ExecutableDirectory { get; }
 
-    public string LogsDirectory { get; }
-    public LogReader LogReader { get; }
+    public static string LogsDirectory { get; private set; }
     public Dictionary<string, Server?> Servers { get; set; }
     public int ServerCount => Servers.Count;
     private Server[] QueuedMatches {get; set;}
@@ -24,7 +24,7 @@ public class RiftManager
     public event EventHandler? ServerStarted;
     public event EventHandler? ServerStopped;
     
-    public RiftManager(string serverRootPath, string localIpAddress, string externalIpAddress, int serverCap = 5, int queueCap = 5, int startingPort = 7777)
+    public ServerManager(string serverRootPath, string localIpAddress, string externalIpAddress, int serverCap = 5, int queueCap = 5, int startingPort = 7777)
     {
         ServerRootPath = serverRootPath;
         LogsDirectory = Path.GetFullPath(serverRootPath + "//g3//Saved//Logs") ;
@@ -37,7 +37,6 @@ public class RiftManager
             throw new FileNotFoundException($"[{exe}] is not a valid path to {ServerExecutable}");
         }
         
-        LogReader = new LogReader(LogsDirectory);
         ServerCap = serverCap;
         QueueCap = queueCap;
         StartingPort = startingPort;
@@ -53,7 +52,7 @@ public class RiftManager
     public bool CreateSever(
         out Server? server,
         string port = "",
-        bool startServer = false, 
+        bool autoStart = false, 
         bool bypassServerCap = false)
     {
         server = null;
@@ -106,7 +105,14 @@ public class RiftManager
         serverProcess.StartInfo.WorkingDirectory = ExecutableDirectory;
         serverProcess.StartInfo.Arguments = args;
 
-        server = new Server(serverProcess, args, port, autoStart: startServer);
+        server = new Server(
+            serverProcess,
+            args,
+            port,
+            port,
+            LogsDirectory,
+            true,
+            autoStart);
         
         Servers.Add(port, server);
 
@@ -114,17 +120,15 @@ public class RiftManager
     }
     private void OnServerStop(object? sender, EventArgs e)
     {
-        var server = sender as Server;
+        var server = ((ServerArg)e).Server;
         Console.WriteLine($"\n[Server-{server.Port} has stopped]");
-        Task.Run(() => LogReader.Read(server.Port));
-        OnServerStopped();
+        OnServerStopped(server);
     }
     private void OnServerStart(object? sender, EventArgs e)
     {
-        var server = sender as Server;
+        var server = ((ServerArg)e).Server;
         Console.WriteLine($"[{ExternalIpAddress}:{server.Port} is now available]");
-        
-        OnServerStarted();
+        OnServerStarted(server);
     }
 
     public bool StartServer(string port)
@@ -192,12 +196,12 @@ public class RiftManager
         return Servers.Values.ToList();
     }
     
-    public void OnServerStarted()
+    public void OnServerStarted(Server server)
     {
-        ServerStarted?.Invoke(this, EventArgs.Empty);
+        ServerStarted?.Invoke(this, new ServerArg(server));
     }
-    public void OnServerStopped()
+    public void OnServerStopped(Server server)
     {
-        ServerStopped?.Invoke(this, EventArgs.Empty);
+        ServerStopped?.Invoke(this, new ServerArg(server));
     }
 }
