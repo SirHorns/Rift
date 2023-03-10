@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9V/+xMHYN2ihn4BZpoGaOPFI1RG31HjVZlueRBeZuu+O0WdMV5/tZ/z9aE8A1moeRemX3j6srY6+PebfeoTwiQ==",
+  "dgSpecHash": "p/ueZOg4hOoM6nPuNRKW3tr7LVGcO8vOP8NuGnhpIFcD+RwTlM3OUih7LGeQESXcalIT6kK1s1qAc9yWVVRWAA==",
   "success": true,
-  "projectFilePath": "G:\\GitHub\\Spellbreak Projects\\Rift\\Rift.csproj",
+  "projectFilePath": "F:\\Users\\mgt_bsthomas4\\Documents\\GitHub\\SpellbreakProjects\\Rift\\Rift.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Oatmelieo\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\mgt_bsthomas4\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

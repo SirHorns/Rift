@@ -7,7 +7,7 @@ public class ServerData
 {
     private readonly List<PlayerBlob> _players  = new();
     public int PlayerCount => _players.Count;
-    public static event EventHandler? PlayedAdded;
+    public event EventHandler? PlayedAdded;
 
     public void AddPlayer(PlayerBlob player)
     {

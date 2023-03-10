@@ -16,13 +16,14 @@ public class ServerManager
     
     public string ExecutableDirectory { get; }
 
-    public static string LogsDirectory { get; private set; }
+    public string LogsDirectory { get; private set; }
     public Dictionary<string, Server?> Servers { get; set; }
     public int ServerCount => Servers.Count;
     private Server[] QueuedMatches {get; set;}
 
     public event EventHandler? ServerStarted;
     public event EventHandler? ServerStopped;
+    public event EventHandler? PlayerJoin;
     
     public ServerManager(string serverRootPath, string localIpAddress, string externalIpAddress, int serverCap = 5, int queueCap = 5, int startingPort = 7777)
     {
@@ -47,6 +48,7 @@ public class ServerManager
         
         Server.Started += OnServerStart;
         Server.Stopped += OnServerStop;
+        Server.PlayerJoin += OnPlayerJoin;
     }
     
     public bool CreateSever(
@@ -118,17 +120,22 @@ public class ServerManager
 
         return true;
     }
+    
     private void OnServerStop(object? sender, EventArgs e)
     {
-        var server = ((ServerArg)e).Server;
+        var server = (Server) sender;
         Console.WriteLine($"\n[Server-{server.Port} has stopped]");
-        OnServerStopped(server);
+        ServerStopped?.Invoke(this, new ServerArg(server));
     }
     private void OnServerStart(object? sender, EventArgs e)
     {
-        var server = ((ServerArg)e).Server;
+        var server = (Server) sender;
         Console.WriteLine($"[{ExternalIpAddress}:{server.Port} is now available]");
-        OnServerStarted(server);
+        ServerStarted?.Invoke(this, new ServerArg(server));
+    }
+    private void OnPlayerJoin(object? sender, EventArgs e)
+    {
+        PlayerJoin?.Invoke(this, new PlayerJoinArg((e as PlayerArg).Player, sender as Server));
     }
 
     public bool StartServer(string port)
@@ -194,14 +201,5 @@ public class ServerManager
     public List<Server?> GetServers()
     {
         return Servers.Values.ToList();
-    }
-    
-    public void OnServerStarted(Server server)
-    {
-        ServerStarted?.Invoke(this, new ServerArg(server));
-    }
-    public void OnServerStopped(Server server)
-    {
-        ServerStopped?.Invoke(this, new ServerArg(server));
     }
 }

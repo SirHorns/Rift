@@ -16,6 +16,7 @@ public class Server
     public static event EventHandler? Started;
     public static event EventHandler? Stopped;
     public static event EventHandler? Exited;
+    public static event EventHandler? PlayerJoin;
 
     public LogReader LogReader { get; }
 
@@ -36,27 +37,30 @@ public class Server
 
         LogReader = new LogReader(matchId, logDirectory, readLogFile, this);
         
-
         if (autoStart)
         {
             Start();
         }
     }
 
-    private void OnPlayerAdded(object? sender,EventArgs e)
+    private void OnPlayerAdded(object? sender,EventArgs? e)
     {
-       Console.WriteLine($"{(e as PlayerArg)?.Player.DisplayName}");
+        if (e is not PlayerArg arg)
+        {
+            return;
+        }
+        
+        PlayerJoin?.Invoke(this, new PlayerArg(arg.Player));
     }
 
 
     public bool Start()
     {
-        Console.WriteLine($"Starting server {Port}");
+        Console.WriteLine($"{Port} -Starting");
         
         try
         {
             _process.Start();
-            Task.Run(() => LogReader.Read());
         }
         catch (Exception e)
         {
@@ -65,7 +69,8 @@ public class Server
             return IsRunning = false;
         }
         
-        Started?.Invoke(this, new ServerArg(this));
+        Task.Run(() => LogReader.Read());
+        Started?.Invoke(this, EventArgs.Empty);
         return IsRunning = true;
     }
     
@@ -83,7 +88,7 @@ public class Server
             return false;
         }
         
-        Stopped?.Invoke(this, new ServerArg(this));
+        Stopped?.Invoke(this, EventArgs.Empty);
         return true;
     }
     
@@ -91,5 +96,10 @@ public class Server
     {
         IsRunning = false;
         Exited?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OnPlayerJoin()
+    {
+        
     }
 }

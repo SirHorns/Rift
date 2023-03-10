@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
+using Rift.Events;
 using Rift.Player;
 
 namespace Rift;
@@ -12,7 +13,7 @@ public class LogReader
     private readonly bool _readLog;
     private readonly string _matchId;
     private Server _owner;
-
+    
     public LogReader(string matchId, string logsDirectory, bool readLog, Server owner)
     {
         _matchId = matchId;
@@ -67,8 +68,8 @@ public class LogReader
             {
                 Console.WriteLine("Bad Player Blob.");
                 return Task.CompletedTask;
-            }
-
+            } 
+           
             _owner.ServerData.AddPlayer(blob);
         }
 

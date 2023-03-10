@@ -55,25 +55,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Oatmelieo\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\mgt_bsthomas4\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\GitHub\\Spellbreak Projects\\Rift\\Rift.csproj",
+      "projectUniqueName": "F:\\Users\\mgt_bsthomas4\\Documents\\GitHub\\SpellbreakProjects\\Rift\\Rift.csproj",
       "projectName": "Rift",
-      "projectPath": "G:\\GitHub\\Spellbreak Projects\\Rift\\Rift.csproj",
-      "packagesPath": "C:\\Users\\Oatmelieo\\.nuget\\packages\\",
-      "outputPath": "G:\\GitHub\\Spellbreak Projects\\Rift\\obj\\",
+      "projectPath": "F:\\Users\\mgt_bsthomas4\\Documents\\GitHub\\SpellbreakProjects\\Rift\\Rift.csproj",
+      "packagesPath": "C:\\Users\\mgt_bsthomas4\\.nuget\\packages\\",
+      "outputPath": "F:\\Users\\mgt_bsthomas4\\Documents\\GitHub\\SpellbreakProjects\\Rift\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Oatmelieo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mgt_bsthomas4\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
