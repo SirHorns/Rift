@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Rift.Player;
 
 public class JoinOptions

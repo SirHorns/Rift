@@ -1,3 +1,4 @@
+using System;
 using Rift.Player;
 
 namespace Rift.Events;

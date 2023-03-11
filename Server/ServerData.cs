@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Rift.Events;
 using Rift.Player;
 
